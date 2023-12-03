@@ -8,11 +8,15 @@
 using namespace std;
 
 class Category {
-public:
     string CategoryName;
     vector<string> pages;
-    explicit Category(string name);
-    void append(const string& page);
+public:
+    explicit Category(string name) {
+        CategoryName = std::move(name);
+    };
+    void append(const string& page) {
+        pages.push_back(page);
+    };
 };
 
 class AdjacencyList {
