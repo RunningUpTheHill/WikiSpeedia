@@ -16,6 +16,5 @@ int main() {
         categories.push_back(Cate);
     }
     AdjacencyList list;
-
     return 0;
 }

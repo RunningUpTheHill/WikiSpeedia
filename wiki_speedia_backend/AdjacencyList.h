@@ -6,7 +6,7 @@
 #include <fstream>
 #include <sstream>
 #include <stack>
-#include <set>
+#include <unordered_set>
 #include <queue>
 
 using namespace std;
@@ -24,9 +24,9 @@ public:
 };
 
 class AdjacencyList {
+public:
     unordered_map<string, string> pageNames;
     unordered_map<string, vector<string>> list;
-public:
     AdjacencyList() {
         ifstream inFile;
         inFile.open("wiki-topcats-page-names.txt");
@@ -52,45 +52,51 @@ public:
         }
     }
 
-    int countNodesDFS(const string& start, const string& end){
-        set<string> visited;
-        return dfs(start, end, visited, 0) - 1;
-    }
+    int countNodesDFS(const string& start, const string& end) {
+        if (start == end) return 0;
 
-    int dfs(const string& node, const string& end, set<string>& visited, int count) {
-        visited.insert(node);
-        if (node == end) return count;
+        stack<pair<string, int>> s; // Pair of node and depth
+        unordered_set<string> visited;
 
-        for (const auto& adjNode : this->list[node]) {
-            if (visited.find(adjNode) == visited.end()) {
-                int result = dfs(adjNode, end, visited, count + 1);
-                if (result != -1) return result;
+        // Initialize
+        s.emplace(start, 0);
+        visited.insert(start);
+
+        while (!s.empty()) {
+            auto node = s.top();
+            s.pop();
+
+            for (const auto& adjNode : this->list[node.first]) {
+                if (visited.find(adjNode) == visited.end()) {
+                    visited.insert(adjNode);
+                    s.emplace(adjNode, node.second+1);
+                }
+                if (adjNode == end) return node.second + 1;
             }
         }
-        return -1; // Path not found
+        return -1; // If end node is not reachable from start node
     }
 
     int countNodesBFS(const string& start, const string& end) {
         if (start == end) return 0;
 
         queue<pair<string, int>> q; // Pair of node and depth
-        set<string> visited;
+        unordered_set<string> visited;
 
         // Initialize
-        q.push({start, 0});
+        q.emplace(start, 0);
         visited.insert(start);
 
         while (!q.empty()) {
-            auto [node, depth] = q.front();
+            auto node = q.front();
             q.pop();
 
-            for (const auto& adjNode : this->list[node]) {
+            for (const auto& adjNode : this->list[node.first]) {
                 if (visited.find(adjNode) == visited.end()) {
                     visited.insert(adjNode);
-                    q.push({adjNode, depth + 1});
-
-                    if (adjNode == end) return depth;
+                    q.emplace(adjNode, node.second+1);
                 }
+                if (adjNode == end) return node.second + 1;
             }
         }
         return -1; // If end node is not reachable from start node
