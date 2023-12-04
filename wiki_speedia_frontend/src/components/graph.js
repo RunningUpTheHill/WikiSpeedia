@@ -35,16 +35,16 @@ export default function GraphView() {
             navigationButtons: true
         },
         nodes: {
-            borderWidth: 2,
-            size: 40,
+            borderWidth: 4,
+            size: 45,
             color: {
-                border: "blue",
-                background: "yellow"
+                border: "black",
+                background: "white"
             },
             font: {color: "purple"}
         },
         edges: {
-            color: "red"
+            color: "white"
         },
         shadow: true,
         smooth: true,
