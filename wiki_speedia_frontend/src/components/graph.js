@@ -4,19 +4,13 @@ import Graph from 'react-vis-network-graph'
 export default function GraphView() {
     const graph = {
         nodes: [
-            {id: 1, label: "Node 1", title: "node 1 tooltip text",
-                shape: "circle"},
-            {id: 2, label: "Node 2", title: "node 2 tooltip text",
-                shape: "circle"},
-            {id: 3, label: "Node 3", title: "node 3 tooltip text",
-                shape: "circle"},
-            {id: 4, label: "Node 4", title: "node 4 tooltip text",
-                shape: "circle"},
+            {id: 1, label: "Node 1", title: "node 1 tooltip text"},
+            {id: 2, label: "Node 2", title: "node 2 tooltip text"},
+            {id: 3, label: "Node 3", title: "node 3 tooltip text"},
             {id: 5, label: "Node 5", title: "node 5 tooltip text"},
             {id: 6, label: "Node 6", title: "node 6 tooltip text"},
             {id: 7, label: "Node 7", title: "node 7 tooltip text"},
-            {id: 8, label: "Node 8", title: "node 8 tooltip text"},
-            {id: 9, label: "Node 9", title: "node 9 tooltip text"}
+            {id: 8, label: "Node 8", title: "node 8 tooltip text"}
         ],
         edges: [
             {from: 1, to: 1},
