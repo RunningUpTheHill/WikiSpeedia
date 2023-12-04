@@ -1,6 +1,12 @@
 #include "AdjacencyList.h"
+#include "crow_all.h"
+using namespace std;
 
 int main() {
+
+    crow::SimpleApp app;
+    AdjacencyList list;
+
     ifstream inFile;
     string category;
     inFile.open("wiki-topcats-categories.txt");
@@ -15,6 +21,29 @@ int main() {
         }
         categories.push_back(Cate);
     }
-    AdjacencyList list;
+
+    CROW_ROUTE(app, "/search/<string>/<string>")
+            ([&](const std::string& start, const std::string& end) {
+
+                int A = list.countNodesBFS(start, end);
+                int B = list.countNodesDFS(start, end);
+
+                crow::json::wvalue result;
+                result["User Entered Values"] = start + " " + end;
+                if (A > -1){
+                    result["message"] = "Success";
+                    result["node_count"] = A;
+                } else {
+                    result["message"] = "Path not found or error";
+                }
+                return result;
+            });
+
+    app.port(18080).multithreaded().run();
+
+
+
+
+
     return 0;
 }

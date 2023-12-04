@@ -26,7 +26,7 @@ public:
 class AdjacencyList {
 public:
     unordered_map<string, string> pageNames;
-    unordered_map<string, vector<string>> list;
+    unordered_map<string, vector<string> > list;
     AdjacencyList() {
         ifstream inFile;
         inFile.open("wiki-topcats-page-names.txt");
